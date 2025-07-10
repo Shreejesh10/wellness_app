@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'login.dart';
+import 'features/auth/login.dart';
 
 void main() {
   runApp(const WellnessApp());

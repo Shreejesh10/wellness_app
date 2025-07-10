@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'signup.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -12,9 +13,9 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _passwordVisibility = false;
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Padding(
+    return Scaffold(
+      body: SafeArea(
+        child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
           child: Column(
             children: [
@@ -44,6 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(
                 width: 380,
                 child: TextFormField(
+                  obscureText: !_passwordVisibility,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Password is required.';
@@ -72,42 +74,47 @@ class _LoginScreenState extends State<LoginScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Checkbox(
-                    checkColor: Colors.black, //color of checkmark
-                    fillColor: WidgetStateProperty.resolveWith<Color>((
-                      Set<WidgetState> states,
-                    ) {
-                      if (states.contains(WidgetState.selected)) {
-                        return Colors.white; //bg when checked
-                      }
-                      return Colors.black; //bg when unchecked
-                    }),
-                    value: _rememberMe,
-                    onChanged: (value) {
-                      setState(() {
-                        _rememberMe = value!;
-                      });
-                    },
+                  Row(
+                    children: [
+                      Checkbox(
+                        checkColor: Colors.black,
+                        fillColor: WidgetStateProperty.resolveWith<Color>(
+                              (Set<WidgetState> states) {
+                            if (states.contains(WidgetState.selected)) {
+                              return Colors.white;
+                            }
+                            return Colors.black;
+                          },
+                        ),
+                        value: _rememberMe,
+                        onChanged: (value) {
+                          setState(() {
+                            _rememberMe = value!;
+                          });
+                        },
+                      ),
+                      const Text("Remember Me"),
+                    ],
                   ),
-                  const Text("Remember Me"),
+                  TextButton(
+                    onPressed: () {
+                      // Handle forgot password
+                    },
+                    child: const Text(
+                      "Forgot Password?",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
                 ],
               ),
-              TextButton(
-                onPressed: () {
-                  //For Future
-                },
-                child: const Text(
-                  "Forgot Password?",
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-              const SizedBox(height: 30),
+
+              const SizedBox(height: 20),
               SizedBox(
                 width: 380,
                 child: Container(
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(15),
                   ),
                   child: TextButton(
                     onPressed: () {},
@@ -168,6 +175,33 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ),
+              ),
+              const SizedBox(height: 20,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      const Text("Don't have an account?"),
+                    ],
+                  ),
+                  SizedBox(width: 5),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context)=> const SignupScreen()),
+                      );
+                    },
+                    child: 
+                    Text(
+                      "Create an Account.",
+                      style: TextStyle(
+                        decoration: TextDecoration.underline,
+                        fontSize: 14,
+                      ),
+                    ),
+                  )
+                ],
               ),
             ],
           ),
