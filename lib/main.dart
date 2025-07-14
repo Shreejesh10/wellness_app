@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'core/route_config/route_config.dart';
+import 'core/route_config/route_names.dart';
 import 'features/auth/login.dart';
 
 void main() {
@@ -67,6 +69,8 @@ class WellnessApp extends StatelessWidget {
         textTheme: const TextTheme(bodyMedium: TextStyle(color: Colors.white)),
         hoverColor: Colors.transparent,
       ),
+      onGenerateRoute: RouteConfig.generateRoute,
+      initialRoute: AuthRouteName.loginScreen,
     );
   }
 }

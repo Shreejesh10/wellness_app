@@ -26,7 +26,7 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/
+    - assets/images/profile.png
 
   fonts:
     - family: Poppins
