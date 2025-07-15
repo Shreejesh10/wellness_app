@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:wellness_app/core/route_config/route_names.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -22,7 +23,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12),
             child: GestureDetector(
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(
+                  context,
+                    RoutesName.profileScreen,
+                );
+
+              },
               child: const CircleAvatar(
                 radius: 22,
                 backgroundImage: AssetImage('assets/images/profile.png'),
@@ -56,7 +63,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             const SizedBox(height: 18),
             _quoteCard(
               '"Your wellness is an investment,\nnot an expense."',
-              'Author Name',
+              'Shreejesh Pathak',
               height: 130,
             ),
             const SizedBox(height: 18),
@@ -69,7 +76,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
             ),
             const SizedBox(height: 18),
-            _tile(CupertinoIcons.sun_min, "Feeling Blessed"),
+            _tile(CupertinoIcons.sun_min, "Feeling Blessed",
+            onTap: (){
+              Navigator.pushNamed(
+                  context,
+                  RoutesName.quotesScreen);
+            }),
             _tile(Icons.woman, "Pride Month"),
             _tile(CupertinoIcons.star, "Self Worth"),
             _tile(CupertinoIcons.heart, "Love"),
@@ -94,6 +106,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   // Reusable icon box widget
   Widget _iconBox(IconData icon, String label) {
+
     return Container(
       decoration: BoxDecoration(
         color: Colors.grey[900],
@@ -118,7 +131,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.grey[900],
+        color: Colors.white,
         borderRadius: BorderRadius.circular(16),
       ),
       width: double.infinity,
@@ -129,7 +142,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           Text(
             quote,
             style: const TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               fontStyle: FontStyle.italic,
               fontSize: 21,
             ),
@@ -138,7 +151,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           Text(
             '- $author',
             style: const TextStyle(
-              color: Colors.white70,
+              color: Colors.black54,
               fontSize: 14,
             ),
           ),
@@ -148,35 +161,39 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   // Reusable tile for the quote topics
-  Widget _tile(IconData icon, String text) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 18),
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.grey[900],
-        borderRadius: BorderRadius.circular(16),
-      ),
-      width: double.infinity,
-      height: 65,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: [
-              Icon(icon, size: 30, color: Colors.white),
-              const SizedBox(width: 15),
-              Text(
-                text,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontStyle: FontStyle.italic,
-                  fontSize: 20,
+  Widget _tile(IconData icon, String text, {VoidCallback? onTap}) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(16),
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 18),
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Colors.grey[900],
+          borderRadius: BorderRadius.circular(16),
+        ),
+        width: double.infinity,
+        height: 65,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                Icon(icon, size: 30, color: Colors.white),
+                const SizedBox(width: 15),
+                Text(
+                  text,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontStyle: FontStyle.italic,
+                    fontSize: 20,
+                  ),
                 ),
-              ),
-            ],
-          ),
-          const Icon(Icons.chevron_right, size: 30, color: Colors.grey),
-        ],
+              ],
+            ),
+            const Icon(Icons.chevron_right, size: 30, color: Colors.grey),
+          ],
+        ),
       ),
     );
   }
