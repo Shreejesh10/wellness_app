@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class QuotesScreen extends StatefulWidget {
   const QuotesScreen({super.key});
@@ -9,6 +10,8 @@ class QuotesScreen extends StatefulWidget {
 
 class _QuotesScreenState extends State<QuotesScreen> {
   final PageController _pageController = PageController();
+  int currentPage = 0;
+
   final List<Map<String, String>> quotes = [
     {
       'quote': 'The only way to do great work is to love what you do.',
@@ -72,8 +75,6 @@ class _QuotesScreenState extends State<QuotesScreen> {
     },
   ];
 
-  int currentPage = 0;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,67 +83,60 @@ class _QuotesScreenState extends State<QuotesScreen> {
         child: PageView.builder(
           controller: _pageController,
           itemCount: quotes.length,
-          onPageChanged: (index) {
-            setState(() {
-              currentPage = index;
-            });
-          },
+          onPageChanged: (index) => setState(() => currentPage = index),
           itemBuilder: (context, index) {
             final quote = quotes[index];
             return Stack(
               children: [
-                // Top AppBar with title and page indicator
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10),
+                  padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       InkWell(
                         onTap: () => Navigator.pop(context),
-                        child: const Icon(Icons.arrow_back, color: Colors.white),
+                        child: Icon(Icons.arrow_back, color: Colors.white, size: 24.sp),
                       ),
-                      const Text(
+                      Text(
                         'Motivation',
-                        style: TextStyle(color: Colors.white, fontSize: 18),
+                        style: TextStyle(color: Colors.white, fontSize: 18.sp),
                       ),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
                         decoration: BoxDecoration(
                           color: Colors.grey[800],
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(12.r),
                         ),
                         child: Text(
                           '${index + 1}/${quotes.length}',
-                          style: const TextStyle(color: Colors.white, fontSize: 12),
+                          style: TextStyle(color: Colors.white, fontSize: 12.sp),
                         ),
                       ),
                     ],
                   ),
                 ),
 
-
-                // Centered Quote Text
                 Center(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                    padding: EdgeInsets.symmetric(horizontal: 24.w),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
                           '❝ ${quote['quote']} ❞',
-                          style: const TextStyle(
+                          style: TextStyle(
                             color: Colors.white,
-                            fontSize: 20,
+                            fontSize: 20.sp,
                             fontStyle: FontStyle.italic,
                           ),
                           textAlign: TextAlign.center,
                         ),
-                        const SizedBox(height: 16),
+                        SizedBox(height: 16.h),
                         Text(
                           '- ${quote['author']}',
-                          style: const TextStyle(
+                          style: TextStyle(
                             color: Colors.grey,
-                            fontSize: 16,
+                            fontSize: 16.sp,
                           ),
                         ),
                       ],
@@ -150,35 +144,34 @@ class _QuotesScreenState extends State<QuotesScreen> {
                   ),
                 ),
 
-                // Sound Icon
                 Positioned(
-                  right: 16,
+                  right: 16.w,
                   top: MediaQuery.of(context).size.height * 0.25,
                   child: CircleAvatar(
                     backgroundColor: Colors.grey[800],
-                    child: const Icon(Icons.volume_up, color: Colors.white),
+                    radius: 24.r,
+                    child: Icon(Icons.volume_up, color: Colors.white, size: 24.sp),
                   ),
                 ),
 
-                // Bottom swipe up + icons
                 Positioned(
-                  bottom: 40,
+                  bottom: 40.h,
                   left: 0,
                   right: 0,
                   child: Column(
                     children: [
-                      const Icon(Icons.swipe, color: Colors.white, size: 60,),
-                      const Text(
+                      Icon(Icons.swipe, color: Colors.white, size: 60.sp),
+                      Text(
                         'Swipe',
-                        style: TextStyle(color: Colors.white, fontSize: 30),
+                        style: TextStyle(color: Colors.white, fontSize: 30.sp),
                       ),
-                      const SizedBox(height: 20),
+                      SizedBox(height: 20.h),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Icon(Icons.favorite_border, color: Colors.white, size: 40,),
-                          SizedBox(width: 30),
-                          Icon(Icons.local_offer_outlined, color: Colors.white, size: 40,),
+                        children: [
+                          Icon(Icons.favorite_border, color: Colors.white, size: 40.sp),
+                          SizedBox(width: 30.w),
+                          Icon(Icons.local_offer_outlined, color: Colors.white, size: 40.sp),
                         ],
                       ),
                     ],

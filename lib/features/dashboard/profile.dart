@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wellness_app/core/route_config/route_names.dart';
 
 class UserProfileScreen extends StatefulWidget {
@@ -15,131 +16,139 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Profile", style:
-        TextStyle(fontSize: 25, color: Colors.grey[400] ),),
+          "Profile",
+          style: TextStyle(fontSize: 25.sp, color: Colors.grey[400]),
+        ),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: 10),
+        padding: EdgeInsets.symmetric(horizontal: 10.w),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 30,),
+            SizedBox(height: 30.h),
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 _profileBox(),
               ],
             ),
-            const SizedBox(height: 30,),
-            const Text(
+            SizedBox(height: 30.h),
+            Text(
               "MAKE IT YOURS",
               style: TextStyle(
                 color: Colors.grey,
-                fontSize: 20,
+                fontSize: 20.sp,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 30,),
-            _tile(CupertinoIcons.book, "Content Preferences",
-            onTap: (){
-              Navigator.pushNamed(
+            SizedBox(height: 30.h),
+            _tile(
+              CupertinoIcons.book,
+              "Content Preferences",
+              onTap: () {
+                Navigator.pushNamed(
                   context,
-                  RoutesName.preferenceScreen,);
-            }
+                  RoutesName.preferenceScreen,
+                );
+              },
             ),
-            const SizedBox(height: 30,),
-            const Text(
+            SizedBox(height: 30.h),
+            Text(
               "ACCOUNT",
               style: TextStyle(
                 color: Colors.grey,
-                fontSize: 20,
+                fontSize: 20.sp,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const SizedBox(height: 30,),
+            SizedBox(height: 30.h),
             _tile(CupertinoIcons.pen, "Theme"),
             _tile(Icons.password, "Forgot Password"),
-            _tile(Icons.exit_to_app,
-                "Logout",
-              onTap: (){
-              Navigator.pushNamed(
+            _tile(
+              Icons.exit_to_app,
+              "Logout",
+              onTap: () {
+                Navigator.pushNamed(
                   context,
-                  RoutesName.loginScreen,);
-              }
-
+                  RoutesName.loginScreen,
+                );
+              },
             ),
-
           ],
         ),
       ),
     );
   }
+
   // WIDGETS that can be reused
-  Widget _profileBox(){
+  Widget _profileBox() {
     return Container(
       decoration: BoxDecoration(
         color: Colors.grey[900],
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(20.r),
       ),
-      width: 380,
-      padding: const EdgeInsets.all(16),
+      width: 380.w,
+      padding: EdgeInsets.all(16.w),
       child: Row(
         children: [
           CircleAvatar(
-            backgroundImage: AssetImage('assets/images/profile.png'),
-            radius: 35,
+            backgroundImage: const AssetImage('assets/images/profile.png'),
+            radius: 35.r,
           ),
-          const SizedBox(width: 16,),
+          SizedBox(width: 16.w),
           Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: const[
-              Text("Shreejesh Pathak", style: TextStyle(
-                fontSize: 23,
-                fontWeight: FontWeight.bold
-              ),
-              ),
-              Text("shreejeshpathak@gmail.com",
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "Shreejesh Pathak",
                 style: TextStyle(
-                    fontSize: 15, color: Colors.grey),
+                  fontSize: 23.sp,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-
+              Text(
+                "shreejeshpathak@gmail.com",
+                style: TextStyle(fontSize: 15.sp, color: Colors.grey),
+              ),
             ],
           ),
         ],
-      )
+      ),
     );
-
   }
+
   Widget _tile(IconData icon, String text, {VoidCallback? onTap}) {
     return InkWell(
       onTap: onTap,
+      borderRadius: BorderRadius.circular(16.r),
       child: Container(
-        margin: const EdgeInsets.only(bottom: 18),
-        padding: const EdgeInsets.all(16),
+        margin: EdgeInsets.only(bottom: 18.h),
+        padding: EdgeInsets.all(16.w),
         decoration: BoxDecoration(
           color: Colors.grey[900],
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(16.r),
         ),
         width: double.infinity,
-        height: 65,
+        height: 65.h,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
               children: [
-                Icon(icon, size: 30, color: Colors.white),
-                const SizedBox(width: 15),
+                Icon(icon, size: 30.sp, color: Colors.white),
+                SizedBox(width: 15.w),
                 Text(
                   text,
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: Colors.white,
                     fontStyle: FontStyle.italic,
-                    fontSize: 20,
+                    fontSize: 20.sp,
                   ),
                 ),
               ],
             ),
-            const Icon(Icons.chevron_right, size: 30, color: Colors.grey),
+            Icon(Icons.chevron_right, size: 30.sp, color: Colors.grey),
           ],
         ),
       ),

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wellness_app/core/route_config/route_names.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -15,144 +16,135 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Text(
+        title: Text(
           "Explore",
-          style: TextStyle(fontSize: 35, fontWeight: FontWeight.w500),
+          style: TextStyle(fontSize: 35.sp, fontWeight: FontWeight.w500),
         ),
         actions: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
+            padding: EdgeInsets.symmetric(horizontal: 12.w),
             child: GestureDetector(
               onTap: () {
-                Navigator.pushNamed(
-                  context,
-                    RoutesName.profileScreen,
-                );
-
+                Navigator.pushNamed(context, RoutesName.profileScreen);
               },
-              child: const CircleAvatar(
-                radius: 22,
-                backgroundImage: AssetImage('assets/images/profile.png'),
+              child: CircleAvatar(
+                radius: 22.r,
+                backgroundImage: const AssetImage('assets/images/profile.png'),
               ),
             ),
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 30),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                _iconBox(CupertinoIcons.heart, "My favorites"),
-                _iconBox(CupertinoIcons.bell, "Remind Me"),
-              ],
-            ),
-            const SizedBox(height: 30),
-            const Text(
-              "Today's Quotes",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 25,
-                fontWeight: FontWeight.bold,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 30.h),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _iconBox(CupertinoIcons.heart, "My favorites"),
+                  _iconBox(CupertinoIcons.bell, "Remind Me"),
+                ],
               ),
-            ),
-            const SizedBox(height: 18),
-            _quoteCard(
-              '"Your wellness is an investment,\nnot an expense."',
-              'Shreejesh Pathak',
-              height: 130,
-            ),
-            const SizedBox(height: 18),
-            const Text(
-              "Quotes",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 25,
-                fontWeight: FontWeight.bold,
+              SizedBox(height: 30.h),
+              Text(
+                "Today's Quotes",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 25.sp,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            const SizedBox(height: 18),
-            _tile(CupertinoIcons.sun_min, "Feeling Blessed",
-            onTap: (){
-              Navigator.pushNamed(
-                  context,
-                  RoutesName.quotesScreen);
-            }),
-            _tile(Icons.woman, "Pride Month"),
-            _tile(CupertinoIcons.star, "Self Worth"),
-            _tile(CupertinoIcons.heart, "Love"),
-            //For Health Tips
-            const SizedBox(height: 18,),
-            const Text(
-              "Health Tips",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 25,
-                fontWeight: FontWeight.bold,
+              SizedBox(height: 15.h),
+              _quoteCard(
+                '"Your wellness is an investment,\nnot an expense."',
+                'Shreejesh Pathak',
               ),
-            ),
-            const SizedBox(height: 18),
-            _tile(CupertinoIcons.sun_min, "Breathe to Reset"),
-            const SizedBox(height: 20),
-          ],
+              SizedBox(height: 18.h),
+              Text(
+                "Quotes",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 25.sp,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 18.h),
+              _tile(CupertinoIcons.sun_min, "Feeling Blessed", onTap: () {
+                Navigator.pushNamed(context, RoutesName.quotesScreen);
+              }),
+              _tile(Icons.woman, "Pride Month"),
+              _tile(CupertinoIcons.star, "Self Worth"),
+              _tile(CupertinoIcons.heart, "Love"),
+              SizedBox(height: 18.h),
+              Text(
+                "Health Tips",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 25.sp,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 18.h),
+              _tile(CupertinoIcons.sun_min, "Breathe to Reset"),
+              SizedBox(height: 20.h),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  // Reusable icon box widget
   Widget _iconBox(IconData icon, String label) {
-
     return Container(
       decoration: BoxDecoration(
         color: Colors.grey[900],
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(20.r),
       ),
-      height: 70,
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      height: 70.h,
+      padding: EdgeInsets.symmetric(horizontal: 11.w),
       child: Row(
         children: [
-          Icon(icon, size: 30, color: Colors.white),
-          const SizedBox(width: 10),
+          Icon(icon, size: 25.sp, color: Colors.white),
+          SizedBox(width: 5.w),
           Text(
             label,
-            style: const TextStyle(color: Colors.white, fontSize: 18),
+            style: TextStyle(color: Colors.white, fontSize: 18.sp),
           ),
         ],
       ),
     );
   }
-  // Reusable quote card
-  Widget _quoteCard(String quote, String author, {double height = 100}) {
+
+  Widget _quoteCard(String quote, String author) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(15.r),
       ),
       width: double.infinity,
-      height: height,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min, // shrink-wrap content vertically
         children: [
           Text(
             quote,
-            style: const TextStyle(
+            style: TextStyle(
               color: Colors.black,
               fontStyle: FontStyle.italic,
-              fontSize: 21,
+              fontSize: 18.sp,
             ),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
           Text(
             '- $author',
-            style: const TextStyle(
+            style: TextStyle(
               color: Colors.black54,
-              fontSize: 14,
+              fontSize: 14.sp,
             ),
           ),
         ],
@@ -160,38 +152,37 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  // Reusable tile for the quote topics
   Widget _tile(IconData icon, String text, {VoidCallback? onTap}) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: BorderRadius.circular(16.r),
       child: Container(
-        margin: const EdgeInsets.only(bottom: 18),
-        padding: const EdgeInsets.all(16),
+        margin: EdgeInsets.only(bottom: 18.h),
+        padding: EdgeInsets.all(16.w),
         decoration: BoxDecoration(
           color: Colors.grey[900],
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(16.r),
         ),
         width: double.infinity,
-        height: 65,
+        height: 65.h,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
               children: [
-                Icon(icon, size: 30, color: Colors.white),
-                const SizedBox(width: 15),
+                Icon(icon, size: 30.sp, color: Colors.white),
+                SizedBox(width: 15.w),
                 Text(
                   text,
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: Colors.white,
                     fontStyle: FontStyle.italic,
-                    fontSize: 20,
+                    fontSize: 20.sp,
                   ),
                 ),
               ],
             ),
-            const Icon(Icons.chevron_right, size: 30, color: Colors.grey),
+            Icon(Icons.chevron_right, size: 30.sp, color: Colors.grey),
           ],
         ),
       ),

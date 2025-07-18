@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wellness_app/core/route_config/route_names.dart';
 
 class UserPreferenceScreen extends StatefulWidget {
   const UserPreferenceScreen({super.key});
 
   @override
-  State<UserPreferenceScreen> createState() => _UserPreferenceScreenState();
+  State<UserPreferenceScreen> createState() => PreferenceScreen();
 }
 
-class _UserPreferenceScreenState extends State<UserPreferenceScreen> {
+class PreferenceScreen extends State<UserPreferenceScreen> {
   final List<String> topics = [
     'Hard times',
     'Working Out',
@@ -21,27 +22,26 @@ class _UserPreferenceScreenState extends State<UserPreferenceScreen> {
     'Peace',
     'Hustle',
   ];
-
   final Set<String> selectedTopics = {};
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Preferences"),
+        title: Text("Preferences", style: TextStyle(fontSize: 20.sp)),
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: EdgeInsets.symmetric(horizontal: 16.w),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 30),
+            SizedBox(height: 30.h),
             _topic(),
-            const SizedBox(height: 30),
+            SizedBox(height: 30.h),
             _iconGrid(),
-            const SizedBox(height: 40),
+            SizedBox(height: 40.h),
             _saveButton(),
-            const SizedBox(height: 30),
+            SizedBox(height: 30.h),
           ],
         ),
       ),
@@ -49,10 +49,10 @@ class _UserPreferenceScreenState extends State<UserPreferenceScreen> {
   }
 
   Widget _topic() {
-    return const Text(
+    return Text(
       "Select All Topics That\nMotivate You",
       style: TextStyle(
-        fontSize: 30,
+        fontSize: 26.sp,
         fontWeight: FontWeight.bold,
       ),
     );
@@ -60,8 +60,8 @@ class _UserPreferenceScreenState extends State<UserPreferenceScreen> {
 
   Widget _iconGrid() {
     return Wrap(
-      spacing: 16,
-      runSpacing: 16,
+      spacing: 16.w,
+      runSpacing: 16.h,
       children: topics.map((topic) => _iconBox(topic)).toList(),
     );
   }
@@ -76,24 +76,25 @@ class _UserPreferenceScreenState extends State<UserPreferenceScreen> {
         });
       },
       child: Container(
-        width: MediaQuery.of(context).size.width / 2 - 24,
-        height: 70,
+        width: MediaQuery.of(context).size.width / 2 - 24.w,
+        height: 70.h,
         decoration: BoxDecoration(
-          color: isSelected ? Colors.grey[750] : Colors.grey[900],
-          borderRadius: BorderRadius.circular(20),
+          color: isSelected ? Colors.black : Colors.grey[900],
+          borderRadius: BorderRadius.circular(20.r),
         ),
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: EdgeInsets.symmetric(horizontal: 16.w),
         child: Row(
           children: [
             Icon(
               isSelected ? Icons.check_circle : Icons.circle_outlined,
               color: Colors.white,
+              size: 22.sp,
             ),
-            const SizedBox(width: 10),
+            SizedBox(width: 10.w),
             Expanded(
               child: Text(
                 label,
-                style: const TextStyle(color: Colors.white, fontSize: 16),
+                style: TextStyle(color: Colors.white, fontSize: 16.sp),
                 overflow: TextOverflow.ellipsis,
               ),
             ),
@@ -108,27 +109,23 @@ class _UserPreferenceScreenState extends State<UserPreferenceScreen> {
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.white,
-          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 14),
+          padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 14.h),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(12.r),
           ),
         ),
         onPressed: () {
-          // Handle save logic
           if (selectedTopics.isEmpty) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Please select at least one topic')),
             );
           } else {
-            Navigator.pushNamed(
-                context,
-                RoutesName.dashboardScreen);
+            Navigator.pushNamed(context, RoutesName.dashboardScreen);
           }
         },
-        child: const Text(
+        child: Text(
           "Save Preferences",
-          style: TextStyle(color: Colors.black, fontSize: 16),
-
+          style: TextStyle(color: Colors.black, fontSize: 16.sp),
         ),
       ),
     );

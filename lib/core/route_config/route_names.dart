@@ -12,5 +12,8 @@ class RoutesName {
   static const String loginScreen = '/login-screen';
   static const String preferenceScreen = '/preference_screen';
   static const String quotesScreen = '/quotes_screen';
+  static const String adminDashboardScreen = '/admin_dashboard-screen';
+  static const String addCategoryScreen = '/add-category-screen';
+  static const String addQuotesScreen = '/add-quotes-screen';
   static AuthRouteName get auth => AuthRouteName(); //getter for login, signup, forgot password and change password
 }

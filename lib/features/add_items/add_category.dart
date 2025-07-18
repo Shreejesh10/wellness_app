@@ -2,6 +2,10 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../common_widgets/common_widget.dart';
+
+
+
 class AddCategory extends StatefulWidget {
   const AddCategory({super.key});
 
@@ -29,11 +33,11 @@ class _AddCategoryState extends State<AddCategory> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 20.h),
-              _topic("Category Name:"),
+              topic("Category Name:"),
               SizedBox(height: 30.h),
-              _categoryName(_categoryController),
+              categoryName(_categoryController, "Enter category name"),
               SizedBox(height: 35.h),
-              _topic("Category Type:"),
+              topic("Category Type:"),
               SizedBox(height: 28.h,),
               Row(
                 children: [
@@ -43,9 +47,44 @@ class _AddCategoryState extends State<AddCategory> {
                 ],
               ),
               SizedBox( height: 35.h,),
-              _topic("Choose image for category:"),
+              topic("Choose image for category:"),
               SizedBox(height: 25.h,),
-              _addImage()
+              _addImage(),
+              SizedBox(height: 35.h,),
+              Center(
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      padding: EdgeInsets.symmetric(vertical: 14.h),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.r),
+                      ),
+                    ),
+                    onPressed: () {
+                      String name = _categoryController.text.trim();
+                      if (name.isNotEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text("Category '$name' added!")),
+                        );
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text("Please enter a category name.")),
+                        );
+                      }
+                    },
+                    child: Text(
+                      "Save",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
 
             ],
           ),
@@ -53,31 +92,9 @@ class _AddCategoryState extends State<AddCategory> {
       ),
     );
   }
-  Widget _topic(String text) {
-    return Text(
-      text,
-      style: TextStyle(fontSize: 16.h, fontWeight: FontWeight.bold),
-    );
-  }
 
-  Widget _categoryName(TextEditingController controller) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10.w),
-      decoration: BoxDecoration(
-        color: Colors.grey[900],
-        borderRadius: BorderRadius.circular(20.r),
-      ),
-      child: TextFormField(
-        controller: controller,
-        style: TextStyle(color: Colors.white),
-        decoration: InputDecoration(
-          hintText: "Enter category name",
-          hintStyle: TextStyle(color: Colors.white54),
-          border: InputBorder.none,
-        ),
-      ),
-    );
-  }
+
+
   Widget _buildToggle(String label) {
     bool isSelected = selected == label;
 
@@ -153,39 +170,3 @@ class _AddCategoryState extends State<AddCategory> {
 }
 
 
-// Center
-// (
-// child: SizedBox(
-// width: double.infinity,
-// child: ElevatedButton(
-// style: ElevatedButton.styleFrom(
-// backgroundColor: Colors.white,
-// padding: EdgeInsets.symmetric(vertical: 14.h),
-// shape: RoundedRectangleBorder(
-// borderRadius: BorderRadius.circular(20.r),
-// ),
-// ),
-// onPressed: () {
-// String name = _categoryController.text.trim();
-// if (name.isNotEmpty) {
-// // Handle saving logic here
-// ScaffoldMessenger.of(context).showSnackBar(
-// SnackBar(content: Text("Category '$name' added!")),
-// );
-// } else {
-// ScaffoldMessenger.of(context).showSnackBar(
-// SnackBar(content: Text("Please enter a category name.")),
-// );
-// }
-// },
-// child: Text(
-// "Add Category",
-// style: TextStyle(
-// color: Colors.black,
-// fontSize: 18.sp,
-// fontWeight: FontWeight.bold,
-// ),
-// ),
-// ),
-// ),
-// )

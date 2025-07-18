@@ -1,4 +1,10 @@
+import 'dart:developer';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:wellness_app/core/route_config/route_names.dart';
+import 'package:wellness_app/features/auth/auth_service.dart';
 import 'signup.dart';
 import 'package:wellness_app/features/dashboard/dashboard.dart';
 
@@ -14,31 +20,33 @@ class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   bool _rememberMe = false;
   bool _passwordVisibility = false;
+  final _adminPanel = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+          padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 20.h),
           child: Form(
             key: _formKey,
             child: Column(
               children: [
-                const Center(
+                Center(
                   child: Text(
                     'Welcome Back',
                     style: TextStyle(
-                      fontSize: 30,
+                      fontSize: 30.sp,
                       fontWeight: FontWeight.w600,
                       color: Colors.white,
                     ),
                     textAlign: TextAlign.center,
                   ),
                 ),
-                const SizedBox(height: 60),
+
+                SizedBox(height: 50.h),
                 SizedBox(
-                  width: 380,
+                  width: 380.w,
                   child: TextFormField(
                     controller: _emailController,
                     validator: (value) {
@@ -50,16 +58,16 @@ class _LoginScreenState extends State<LoginScreen> {
                       }
                       return null;
                     },
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       hintText: 'Enter your Email',
-                      prefixIcon: Icon(Icons.email),
-                      contentPadding: EdgeInsets.symmetric(vertical: 17),
+                      prefixIcon: const Icon(Icons.email),
+                      contentPadding: EdgeInsets.symmetric(vertical: 17.h),
                     ),
                   ),
                 ),
-                const SizedBox(height: 60),
+                SizedBox(height: 50.h),
                 SizedBox(
-                  width: 380,
+                  width: 380.w,
                   child: TextFormField(
                     obscureText: !_passwordVisibility,
                     validator: (value) {
@@ -84,31 +92,25 @@ class _LoginScreenState extends State<LoginScreen> {
                           });
                         },
                       ),
-                      contentPadding: const EdgeInsets.symmetric(vertical: 17),
+                      contentPadding: EdgeInsets.symmetric(vertical: 17.h),
                     ),
                   ),
                 ),
-                const SizedBox(height: 5),
+                SizedBox(height: 5.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Row(
                       children: [
                         Checkbox(
-                          checkColor: Colors.black,
-                          fillColor:
-                          WidgetStateProperty.resolveWith<Color>((states) {
-                            if (states.contains(WidgetState.selected)) {
-                              return Colors.white;
-                            }
-                            return Colors.black;
-                          }),
-                          value: _rememberMe,
-                          onChanged: (value) {
-                            setState(() {
-                              _rememberMe = value!;
-                            });
+                         value: _rememberMe,
+                          onChanged: (bool? newValue){
+                           setState(() {
+                             _rememberMe = newValue!;
+                           });
                           },
+                          activeColor: Colors.white,
+
                         ),
                         const Text("Remember Me"),
                       ],
@@ -124,74 +126,88 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 20),
+                SizedBox(height: 20.h),
                 SizedBox(
-                  width: 380,
+                  width: 380.w,
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(15),
+                      borderRadius: BorderRadius.circular(15.r),
                     ),
                     child: TextButton(
                       onPressed: () {
                         FocusScope.of(context).unfocus();
                         if (_formKey.currentState!.validate()) {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context)=> DashboardScreen()),
-                          );
+                          final email = _emailController.text.trim();
+
+                          if (email == 'admin@gmail.com'){
+                            Navigator.of(context).pushNamed(RoutesName.adminDashboardScreen);
+                          }else{
+                            Navigator.of(context).pushNamed(RoutesName.dashboardScreen);
+                          }
+
                         }
                       },
-                      child: const Text(
+                      child: Text(
                         "Login",
-                        style: TextStyle(color: Colors.black, fontSize: 20),
+                        style: TextStyle(color: Colors.black, fontSize: 20.sp),
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(height: 22),
+                SizedBox(height: 22.h),
                 Row(
-                  children: const [
+                  children: [
                     Expanded(
                       child: Divider(
                         color: Colors.grey,
                         thickness: 1,
-                        indent: 17,
-                        endIndent: 10,
+                        indent: 17.w,
+                        endIndent: 10.w,
                       ),
                     ),
-                    Text('Or'),
+                    const Text('Or'),
                     Expanded(
                       child: Divider(
                         color: Colors.grey,
                         thickness: 1,
-                        indent: 10,
-                        endIndent: 17,
+                        indent: 10.w,
+                        endIndent: 17.w,
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 22),
+                SizedBox(height: 22.h),
                 SizedBox(
-                  width: 380,
+                  width: 380.w,
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(20.r),
                     ),
                     child: TextButton(
-                      onPressed: () {
-                        // Google login logic
+                      onPressed: () async {
+                        UserCredential? user =
+                        await AuthService().signInWithGoogle();
+                        if (user != null) {
+                          log("login success");
+                          Navigator.of(
+                            context,
+                          ).pushNamed(RoutesName.preferenceScreen);
+                        } else {
+                          log("login failed");
+                        }
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Icon(Icons.g_translate, color: Colors.black),
-                          SizedBox(width: 5),
+                        children: [
+                          Icon(Icons.g_translate, color: Colors.black, size: 24.sp),
+                          SizedBox(width: 5.w),
                           Text(
                             'Google',
                             style: TextStyle(
                               color: Colors.black,
-                              fontSize: 17,
+                              fontSize: 17.sp,
                             ),
                           ),
                         ],
@@ -199,12 +215,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 20),
+                SizedBox(height: 20.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text("Don't have an account?"),
-                    const SizedBox(width: 5),
+                    SizedBox(width: 5.w),
                     MouseRegion(
                       cursor: SystemMouseCursors.click,
                       child: GestureDetector(
@@ -216,10 +232,10 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           );
                         },
-                        child: const Text(
+                        child: Text(
                           "Create new Account",
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: 18.sp,
                             decoration: TextDecoration.underline,
                             color: Colors.blue,
                           ),
