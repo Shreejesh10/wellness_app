@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../common_widgets/common_widget.dart';
 
-class AddQuotesScreen extends StatefulWidget {
-  const AddQuotesScreen({super.key});
+class AddHealthTips extends StatefulWidget {
+  const AddHealthTips({super.key});
 
   @override
-  State<AddQuotesScreen> createState() => _AddQuotesScreenState();
+  State<AddHealthTips> createState() => _AddHealthTipsState();
 }
 
-class _AddQuotesScreenState extends State<AddQuotesScreen> {
-  final TextEditingController _authorController = TextEditingController();
-  final TextEditingController _quoteController = TextEditingController();
+class _AddHealthTipsState extends State<AddHealthTips> {
+  final TextEditingController _healthTipsController = TextEditingController();
 
-  String selectedCategory = "Motivation";
-  final List<String> categories = ["Quotes", "Motivation", "Life", "Success", "Friendship"];
+  String selectedCategory = "Health";
+  final List<String> categories = ["Health", "Cardio","Mental Health"];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Add Quotes", style: TextStyle(fontSize: 22.sh)),
+        title: Text(
+          'Add Health Tips',
+          style: TextStyle(fontSize: 20.sp),
+        ),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -28,45 +29,57 @@ class _AddQuotesScreenState extends State<AddQuotesScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 20.h),
-              topic("Select Category"),
-              SizedBox(height: 15.h),
+              SizedBox(height: 10.h),
+              Text(
+                "Select Category:",
+                style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
+              ),
+              SizedBox(height: 18.h),
               _dropDown(),
-              SizedBox(height: 30.h),
-              topic("Author Name:"),
-              SizedBox(height: 15.h),
-              categoryName(_authorController, "Author Name"),
-
-              SizedBox(height: 30.h),
-              topic("Quote:"),
-              SizedBox(height: 15.h),
+              SizedBox(height: 28.h),
+              Text(
+                "Health Tips:",
+                style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
+              ),
+              SizedBox(height: 18.h),
               SizedBox(
                 height: 205.h,
-                child: quoteInputField(
-                  "Write a quote",
+                child: _healthStringField(
+                  "Write a health tip",
                   maxLines: 6,
-                  controller: _quoteController,
+                  controller: _healthTipsController,
                 ),
               ),
-
-              SizedBox(height: 40.h),
+              SizedBox(height: 28.h),
               SizedBox(
                 width: double.infinity,
-                height: 50.h,
                 child: ElevatedButton(
-                  onPressed: _handleSubmit,
+                  onPressed: () {
+                    final tips = _healthTipsController.text.trim();
+                    if (tips.isNotEmpty) {
+                      print("Saved: $tips under category $selectedCategory");
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text("Health tip saved!")),
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text("Please write a health tip.")),
+                      );
+                    }
+                  },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
+                    backgroundColor: Colors.grey[900],
+                    padding: EdgeInsets.symmetric(vertical: 14.h),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12.r),
+                      borderRadius: BorderRadius.circular(20.r),
                     ),
                   ),
-                  child: Text("Save", style: TextStyle(
-                      fontSize: 20.sp,
-                      color: Colors.black,fontWeight: FontWeight.bold
-                  )),
+                  child: Text(
+                    "Save",
+                    style: TextStyle(fontSize: 16.sp, color: Colors.white),
+                  ),
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -98,7 +111,7 @@ class _AddQuotesScreenState extends State<AddQuotesScreen> {
     );
   }
 
-  Widget quoteInputField(
+  Widget _healthStringField(
       String hintText, {
         required TextEditingController controller,
         int maxLines = 1,
@@ -120,27 +133,5 @@ class _AddQuotesScreenState extends State<AddQuotesScreen> {
         ),
       ),
     );
-  }
-
-  void _handleSubmit() {
-    String author = _authorController.text.trim();
-    String quote = _quoteController.text.trim();
-
-    if (author.isEmpty || quote.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Please fill all fields")),
-      );
-      return;
-    }
-
-    // Proceed to save or handle submission
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("Quote added successfully!")),
-    );
-
-    // Optionally reset the form
-    _authorController.clear();
-    _quoteController.clear();
-    setState(() => selectedCategory = "Motivation");
   }
 }

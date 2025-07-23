@@ -76,9 +76,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
               _tile(CupertinoIcons.sun_min, "Feeling Blessed", onTap: () {
                 Navigator.pushNamed(context, RoutesName.quotesScreen);
               }),
-              _tile(Icons.woman, "Pride Month"),
-              _tile(CupertinoIcons.star, "Self Worth"),
-              _tile(CupertinoIcons.heart, "Love"),
+              SizedBox(height: 8.h,),
+              _tile(Icons.woman, "Pride Month", onTap: (){
+                Navigator.pushNamed(context, RoutesName.quotesScreen);
+              }),
+              SizedBox(height: 8.h,),
+              _tile(CupertinoIcons.star, "Self Worth", onTap: (){
+                Navigator.pushNamed(context, RoutesName.quotesScreen);
+              }),
+              SizedBox(height: 8.h,),
+              _tile(CupertinoIcons.heart, "Love",onTap: (){
+                Navigator.pushNamed(context, RoutesName.quotesScreen);
+              }),
               SizedBox(height: 18.h),
               Text(
                 "Health Tips",

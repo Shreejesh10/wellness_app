@@ -20,13 +20,12 @@ class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   bool _rememberMe = false;
   bool _passwordVisibility = false;
-  final _adminPanel = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Padding(
+        child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 20.h),
           child: Form(
             key: _formKey,

@@ -63,7 +63,12 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             ),
             SizedBox(height: 30.h),
             _tile(CupertinoIcons.pen, "Theme"),
-            _tile(Icons.password, "Forgot Password"),
+            _tile(Icons.password, "Change Password",
+            onTap: (){
+              Navigator.pushNamed(
+                  context,
+                  RoutesName.changePasswordScreen);
+            }),
             _tile(
               Icons.exit_to_app,
               "Logout",

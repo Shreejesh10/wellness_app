@@ -55,7 +55,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
                   count: "50",
                   text: "Total Health Tips",
                   onTap: () {
-                    //For Future
+                    Navigator.pushNamed(context,
+                        RoutesName.addHealthTipsScreen);
                   },
                 ),
                 SizedBox(height: 50.h),
